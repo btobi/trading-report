@@ -8,7 +8,7 @@ export default class TransactionsTable extends React.Component {
     render() {
         return (
             <div>
-                <Typography variant={"h4"} gutterBottom>All transactions</Typography>
+                <Typography variant={"h4"} align={"left"} gutterBottom>All transactions</Typography>
                 <TableContainer component={Paper}>
                     <Table size={"small"}>
                         <TableHead>

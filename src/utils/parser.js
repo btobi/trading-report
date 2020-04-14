@@ -89,17 +89,54 @@ const transactions2Trades = (transactions) => {
     }
 
     const trades = Object.values(symbols).flat();
-
     trades.sort((a, b) => a.dateStart - b.dateStart);
-
     return trades;
+};
 
+const trades2statistics = (trades) => {
+
+    const statistics = {
+        total: 0,
+        totalProfit: 0,
+        totalLoss: 0,
+        avgProfit: 0,
+        avgLoss: 0,
+        profitLossRatio: 0,
+        successfulTrades: 0,
+        nonSuccessfulTrades: 0,
+        successRatio: 0,
+        totalTrades: 0
+    };
+
+    for (const trade of trades) {
+
+        // profit
+        if (trade.total > 0) {
+            statistics.totalProfit += trade.total;
+            statistics.successfulTrades += 1;
+        } else if(trade.total < 0) {
+            statistics.totalLoss += Math.abs(trade.total);
+            statistics.nonSuccessfulTrades += 1;
+        }
+
+    }
+
+    statistics.avgProfit = statistics.totalProfit / statistics.successfulTrades;
+    statistics.avgLoss = statistics.totalLoss / statistics.nonSuccessfulTrades;
+
+    statistics.total = statistics.totalProfit - statistics.totalLoss;
+
+    statistics.totalTrades = statistics.successfulTrades + statistics.nonSuccessfulTrades;
+    statistics.successRatio = statistics.successfulTrades / statistics.totalTrades;
+    statistics.profitLossRatio = statistics.avgProfit / statistics.avgLoss;
+
+    return statistics
 };
 
 const transactions = tlg2transactions(tlgString);
-
 const trades = transactions2Trades(transactions);
+const statistics = trades2statistics(trades);
 
 console.log(trades);
 
-export {transactions, trades};
+export {transactions, trades, statistics};

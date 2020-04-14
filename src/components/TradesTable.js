@@ -3,28 +3,6 @@ import React from "react";
 import {Typography, TableContainer, Paper, Table, TableHead, TableCell, TableBody, TableRow} from "@material-ui/core";
 import {gradient, percentLog} from "../utils/colors";
 
-const SummaryRow = () =>
-    <TableRow>
-        <TableCell></TableCell>
-    </TableRow>;
-
-const between = (number, min, max) => Math.min(Math.max(number, min), max);
-
-const getHslGreen = (number, max) => `hsl(130, 100%, ${100 - between(number / max * 80 + 20, 0, 100)}%)`;
-const getHslRed = (number, max) => `hsl(0, 100%, ${80 - between(-number / max * 60, 0, 100)}%)`;
-
-const colorNumber = (number) => {
-    if (number > 0) {
-        return {
-            background: getHslGreen(number, 500)
-        }
-    } else if (number < 0) {
-        return {
-            background: getHslRed(number, 500)
-        }
-    }
-}
-
 export default class TradesTable extends React.Component {
 
     render() {
@@ -34,7 +12,7 @@ export default class TradesTable extends React.Component {
 
         return (
             <div>
-                <Typography variant={"h4"} gutterBottom>Trade Summary</Typography>
+                <Typography variant={"h4"} align={"left"} gutterBottom>Trade Summary</Typography>
                 <TableContainer component={Paper}>
                     <Table size={"small"}>
                         <TableHead>
@@ -71,7 +49,7 @@ export default class TradesTable extends React.Component {
                                                        trade.total > 0
                                                            ? percentLog(0, maxPositive, trade.total) > 0.7 ? ' white' : 'inherit'
                                                            : 'inherit'
-                                                           // : percentLog(0, maxNegative, Math.abs(trade.total)) > 0.7 ? ' white' : 'inherit'
+                                                   // : percentLog(0, maxNegative, Math.abs(trade.total)) > 0.7 ? ' white' : 'inherit'
                                                }}>{trade.total.toFixed(2)}</TableCell>
                                     {/*<TableCell align={"right"}>{trade.commission}</TableCell>*/}
                                 </TableRow>
